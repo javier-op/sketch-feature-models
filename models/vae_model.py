@@ -11,8 +11,8 @@ class VAE(tf.keras.Model):
         """
         Variatonal Auto Encoder constructor.
         Args:
-            encoder (tensorflow model): encoder architecture
-            decoder (tensorflow model): decoder architecture
+            encoder (tf.Model): encoder architecture
+            decoder (tf.Model): decoder architecture
             inner_shape (integer): size of encoder output and decoder input
             code_size (integer): dimensions of the latent space of the VAE
         """
