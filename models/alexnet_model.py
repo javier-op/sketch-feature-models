@@ -4,6 +4,7 @@ class AlexNet(tf.keras.Model):
     """
     AlexNet implementation with subtle variations.
     """
+
     def __init__(self, number_of_classes):
         """
         AlexNet constructor.
@@ -79,6 +80,7 @@ class AlexNetEncoder(tf.keras.Model):
     AlexNet based encoder architecture with different padding so it can be reversed,
     6 convolutional layers followed by 2 fully connected layers.
     """
+
     def __init__(self):
         super(AlexNetEncoder, self).__init__()
 
@@ -153,6 +155,7 @@ class AlexNetDecoder(tf.keras.Model):
     AlexNet based decoder architecture, an inverted AlexNetEncoder,
     2 fully connected layers followed by 6 transposed convolutional layers.
     """
+    
     def __init__(self):
         super(AlexNetDecoder, self).__init__()
         self.relu = tf.keras.layers.ReLU()
