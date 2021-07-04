@@ -30,6 +30,9 @@ class BYOL(tf.keras.Model):
         super(BYOL, self).__init__()
         self.online_encoder = encoder
         self.online_encoder._name = 'online_encoder'
+        # tf.keras.models.clone_model only works on functional models
+        # a better alternative could be building both online and target
+        # architectures before, copying weights and pass them as parameters
         self.target_encoder = tf.keras.models.clone_model(self.online_encoder)
         self.target_encoder._name = 'target_encoder'
         self.online_projector = projector
