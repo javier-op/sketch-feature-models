@@ -8,6 +8,7 @@ class NaiveSSVAE(tf.keras.Model):
     cases. Encoder, decoder and classifier architectures should be
     instantiated before and passed in the constructor.
     """
+
     def __init__(self, encoder, decoder, inner_shape, code_size, classifier, classifier_output_shape, n_classes):
         """
         NaiveSSVAE constructor.
@@ -30,14 +31,14 @@ class NaiveSSVAE(tf.keras.Model):
         self.encoder_fc = tf.keras.layers.Dense(code_size*2, name='encoder_fc')
         self.encoder_fc(tf.keras.Input(self.inner_shape, name='encoder_fc_input'))
         self.decoder_fc = tf.keras.layers.Dense(self.inner_shape, name='decoder_fc')
-        self.decoder_fc(tf.keras.Input((self.code_size,), name='decoder_fc_input'))
+        self.decoder_fc(tf.keras.Input(self.code_size, name='decoder_fc_input'))
         self.decoder = decoder
         self.classifier = classifier
         self.classifier_fc = tf.keras.layers.Dense(n_classes, activation='softmax', name='classifier_fc')
         if classifier is None:
-            self.classifier_fc(tf.keras.Input((self.code_size,), name='classifier_fc_input'))
+            self.classifier_fc(tf.keras.Input(self.code_size, name='classifier_fc_input'))
         else:
-            self.classifier_fc(tf.keras.Input((self.classifier_output_shape,), name='classifier_fc_input'))
+            self.classifier_fc(tf.keras.Input(self.classifier_output_shape, name='classifier_fc_input'))
         
     def encode(self, x, training=False):
         x = self.encoder(x, training)
@@ -135,13 +136,13 @@ def categorical_crossentropy(y_true, y_pred, n_classes):
     return categorical_loss
 
 
-def ss_loss_generator(beta=1, gamma=1):
+def ss_loss_generator(beta=1., gamma=1.):
     """
-    Generator for elbo loss function for NaiveSSVAE.
+    Generator for loss function for NaiveSSVAE.
     Args:
-        beta (integer, optional): Weight of the KL divergence as shown
+        beta (float, optional): Weight of the KL divergence as shown
         in https://openreview.net/forum?id=Sy2fzU9gl, defaults to 1.
-        gamma (integer, optional): Weight of the categorical loss in the
+        gamma (float, optional): Weight of the categorical loss in the
         labeled case, defaults to 1.
     """
     def semi_supervised_loss(x_original_l, y_true_l, mu_l, logvar_l, x_recon_l, y_pred_l,
@@ -160,7 +161,7 @@ def ss_loss_generator(beta=1, gamma=1):
             mu_u (tf.Tensor): mean of the normal distribution, unlabeled case
             logvar_u (tf.Tensor): log variance of the normal distribution, unlabeled case
             x_recon_u (tf.Tensor): reconstructed images, unlabeled case
-            n_classes (tf.Tensor): number of classes in the model
+            n_classes (integer): number of classes in the model
 
         Returns:
             tuple of tf.Tensors: tuple with total loss, reconstruction loss, KLD loss and classification loss
