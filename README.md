@@ -5,8 +5,8 @@ All models, beside AlexNet based ones, require sub architectures to be built, co
 
 Usage example:
 ```python
-from alexnet_model import AlexNetEncoder, AlexNetDecoder
-from vae_model import VAE
+from models.alexnet_model import AlexNetEncoder, AlexNetDecoder
+from models.vae_model import VAE
 import tensorflow as tf
 
 vae_input = tf.keras.Input((256,256,1), name='vae')
