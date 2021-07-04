@@ -9,11 +9,11 @@ from models.alexnet_model import AlexNetEncoder, AlexNetDecoder
 from models.vae_model import VAE
 import tensorflow as tf
 
-vae_input = tf.keras.Input((256,256,1), name='vae')
+vae_input = tf.keras.Input((256,256,1), name='vae_input')
 encoder = AlexNetEncoder()
 encoder(vae_input)
 
-decoder_input = tf.keras.Input((1024,), name='decoder')
+decoder_input = tf.keras.Input((1024,), name='decoder_input')
 decoder = AlexNetDecoder()
 decoder(decoder_input)
 
