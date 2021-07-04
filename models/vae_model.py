@@ -73,6 +73,7 @@ class VAE(tf.keras.Model):
         self.optimizer.apply_gradients(zip(gradients, trainable_vars))
         return {"total_loss": loss_value, "recon_loss": recon_loss, "kld_loss":kld_loss}
 
+
 def elbo_loss_generator(beta=0.1):
     """
     Generator for elbo loss function for VAE.
